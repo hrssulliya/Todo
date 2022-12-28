@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<style>
+		* {
+			/* Change your font family */
+			font-family: sans-serif;
+		}
+
+		.content-table {
+			border-collapse: collapse;
+			margin: 25px 0;
+			font-size: 0.9em;
+			width: 100%;
+			border-radius: 5px 5px 0 0;
+			overflow: hidden;
+			box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+		}
+
+		.content-table thead tr {
+			background-color: #009879;
+			color: #ffffff;
+			text-align: left;
+			font-weight: bold;
+		}
+
+		.content-table th {
+			padding: 12px 15px;
+		}
+
+		.content-table td {
+			padding: 7px 15px;
+		}
+
+		.content-table td a {
+			padding: 0px 4px;
+			font-size: 25px;
+			line-height: 20px;
+			color: #009879;
+		}
+
+		.content-table tbody tr {
+			border-bottom: 1px solid #dddddd;
+		}
+
+		.content-table tbody tr:nth-of-type(even) {
+			background-color: #f3f3f3;
+			font-weight: bold;
+			color: #009879;
+		}
+
+		.content-table tbody tr:last-of-type {
+			border-bottom: 2px solid #009879;
+		}
+	</style>
+
+	<div class="container my-6">
+		<h3>Add Todo</h3>
+		<form action="/" method="POST">
+			<div class="mb-3">
+				<label for="title" class="form-label">Todo Title</label>
+				<input type="text" name="title" class="form-control" id="title" aria-describedby="emailHelp">
+			</div>
+			<div class="mb-3">
+				<label for="desc" class="form-label">Todo Description</label>
+				<input type="text" name="desc" class="form-control" id="desc">
+			</div>
+
+			<button type="submit" class="btn btn-success">Submit</button>
+		</form>
+	</div>
+
+	<div class="container my-4">
+		<h2>Your Todos</h2>
+
+		{% if allTodo|length == 0 %}
+
+		<div class="alert alert-success" role="alert">
+			No Todos found. Add your first todo now!
+		</div>
+		{% else %}
+			<table class="content-table">
+				<thead>
+					<tr>
+						<th>S.No.</th>
+						<th>Title</th>
+						<th>Desc</th>
+						<th>Date</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+			<tbody>
+				{% for todo in allTodo %}
+				<tr>
+					<th>{{loop.index}}</th>
+					<td>{{todo.title}}</td>
+					<td>{{todo.desc}}</td>
+					<td>{{todo.date_created}}</td>
+					<td>
+						<a href="/update/{{todo.sno}}" type="button"><i class="fa fa-edit"></i></a>
+						<a href="/delete/{{todo.sno}}" type="button"><i class="fa fa-trash"></i></a>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{% endif %}
+	</div>
+    
+{% endblock body %}
